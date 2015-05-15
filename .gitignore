@@ -1,3 +1,4 @@
 /struct-initialization/struct-initialization
-/socket-connections/socket-connections
+/socket-listen/socket-listen
+/socket-dial/socket-dial
 /json-marshaling/json-marshaling
