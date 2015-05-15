@@ -1,20 +1,37 @@
 package main
 
 import (
+	"fmt"
 	"net"
 	"os"
+	"time"
 )
 
 func main() {
-	port_handle, error := net.Listen("tcp", ":8080")
-	if error != nil {
-		os.Exit( 1 )
-	}
+	service := ":8080"
+	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
+	checkError(err)
+	fmt.Println(tcpAddr)
+	listener, err := net.ListenTCP("tcp", tcpAddr)
+	checkError(err)
 	for {
-		port_connection, error := port_handle.Accept()
-		if error != nil {
-			os.Exit( 1 )
+		conn, err := listener.Accept()
+		if err != nil {
+			continue
 		}
-		go handleConnection(port_connection)
+		go handleClient(conn)
+	}
+}
+
+func handleClient(conn net.Conn) {
+	daytime := time.Now().String()
+	conn.Write([]byte(daytime)) // don't care about return value
+	conn.Close() // we're finished with this client
+}
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Fatal error: %s", err.Error())
+		os.Exit(1)
 	}
 }
