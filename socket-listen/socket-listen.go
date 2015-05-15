@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+// Modified from source:
+// http://astaxie.gitbooks.io/build-web-application-with-golang/content/en/08.1.html
+
 func main() {
 	service := ":8080"
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)

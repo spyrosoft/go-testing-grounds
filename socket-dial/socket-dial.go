@@ -7,6 +7,9 @@ import (
 	"os"
 )
 
+// Modified from source:
+// http://golang.org/pkg/net/#pkg-overview
+
 func main() {
 	conn, error := net.Dial("tcp", "127.0.0.1:8080")
 	exitOnError(error)
