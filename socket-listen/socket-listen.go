@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"net"
+	"os"
 )
 
-func main () {
+func main() {
 	port_handle, error := net.Listen("tcp", ":8080")
 	if error != nil {
 		os.Exit( 1 )
@@ -16,6 +15,6 @@ func main () {
 		if error != nil {
 			os.Exit( 1 )
 		}
-		go handle_port_listening_connection(port_connection)
+		go handleConnection(port_connection)
 	}
 }
