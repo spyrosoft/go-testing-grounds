@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func fallthroughExample() {
@@ -34,6 +35,8 @@ func noConditionExample() {
 }
 
 func main() {
+	fmt.Println("Example of fallthrough")
 	fallthroughExample()
+	fmt.Println("Example of condition free switch")
 	noConditionExample()
 }
