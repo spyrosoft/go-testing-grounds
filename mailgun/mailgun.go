@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/mailgun/mailgun-go"
 	"os"
+	"io/ioutil"
 	"encoding/json"
+	"strings"
 //	"encoding/csv"
 )
 
@@ -14,13 +16,26 @@ type Config struct {
 	PublicKey string `json:"public-key"`
 }
 
-func initializeConfig() {
+func initializeConfig() Config {
+	newConfig := Config{}
 	var receivedSettings []byte
 	receivedSettings, error := ioutil.ReadAll( os.Stdin )
 	exitOnError( error )
-	error = json.Unmarshal( received_settings, &settings )
+	error = json.Unmarshal( receivedSettings, &newConfig )
 	exitOnError( error )
-	min_pixel_intensity = settings.MaxIterations
+	return newConfig
+}
+
+func sendEmail() {
+	config := initializeConfig()
+	mailgunInstance := mailgun.NewMailgun( config.Domain, config.PrivateKey, config.PublicKey )
+	messageContentsBytes, error := ioutil.ReadFile( "message.email" )
+	exitOnError( error )
+	messageContents := string( messageContentsBytes )
+	messageContents = strings.Replace( messageContents, "RECIPIENT_NAME", "Batman", 1 )
+	newMessage := mailgunInstance.NewMessage( "matthew@craftedinsantacruz.com", "Testing Mailgun", messageContents, "matthew@eventsantacruz.com" )
+	_, _, error = mailgunInstance.Send( newMessage )
+	exitOnError( error )
 }
 
 func exitOnError( error error ) {
@@ -31,6 +46,6 @@ func exitOnError( error error ) {
 }
 
 func main() {
-	Mailgun = mailgun.NewMailgun(conf.Mailgun.Domain, conf.Mailgun.PrivateKey, conf.Mailgun.PublicKey)
+	sendEmail(  )
 	fmt.Println( "Success!!" )
 }

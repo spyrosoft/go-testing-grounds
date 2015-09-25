@@ -1,0 +1,5 @@
+{
+	"domain" : "mg.craftedinsantacruz.com",
+	"private-key" : "Mailgun Private Key",
+	"public-key" : "Mailgun Public Key"
+}
