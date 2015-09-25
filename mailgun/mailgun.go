@@ -33,7 +33,7 @@ func sendEmail() {
 	exitOnError( error )
 	messageContents := string( messageContentsBytes )
 	messageContents = strings.Replace( messageContents, "RECIPIENT_NAME", "Batman", 1 )
-	newMessage := mailgunInstance.NewMessage( "matthew@craftedinsantacruz.com", "Testing Mailgun", messageContents, "matthew@eventsantacruz.com" )
+	newMessage := mailgunInstance.NewMessage( "example@example.com", "Testing Mailgun", messageContents, "example@example.com" )
 	_, _, error = mailgunInstance.Send( newMessage )
 	exitOnError( error )
 }
