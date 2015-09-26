@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"strings"
-//	"encoding/csv"
 )
 
 type Config struct {
@@ -29,10 +28,13 @@ func initializeConfig() Config {
 func sendEmail() {
 	config := initializeConfig()
 	mailgunInstance := mailgun.NewMailgun( config.Domain, config.PrivateKey, config.PublicKey )
+	
 	messageContentsBytes, error := ioutil.ReadFile( "message.email" )
 	exitOnError( error )
+	
 	messageContents := string( messageContentsBytes )
 	messageContents = strings.Replace( messageContents, "RECIPIENT_NAME", "Batman", 1 )
+	
 	newMessage := mailgunInstance.NewMessage( "example@example.com", "Testing Mailgun", messageContents, "example@example.com" )
 	_, _, error = mailgunInstance.Send( newMessage )
 	exitOnError( error )
@@ -46,6 +48,6 @@ func exitOnError( error error ) {
 }
 
 func main() {
-	sendEmail(  )
+	sendEmail()
 	fmt.Println( "Success!!" )
 }
