@@ -1,0 +1,6 @@
+{
+	"domain" : "mg.example.com",
+	"sender" : "me@example.com",
+	"recipient" : "you@example.com",
+	"private-key" : "key-REPLACE-ME"
+}
